@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+  <title>repair notes</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+  <style>
+        body { background-color: black; }
+        .card-container { margin-top: 20px; }
+        .card { background-color: #303030; color: white; }
+        .card-title { color: #17a2b8; }
+        .card-content { color: white;}
+        .custom-dropdown { height: 30px;padding:3px }
+
+
+        h5, h6, h4 {border:2px solid lime; margin: 5px 0;}
+        input {
+            border:1px solid lightblue;
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+            background-color: transparent;
+            color: lime;
+        }
+    </style>
+  <style> div.gradient-background {
+  background: linear-gradient(300deg, lime, blue,lime);
+  background-size: 180% 180%;
+  animation: gradient-animation 7s ease-in-out infinite;}
+ @keyframes gradient-animation {0% { background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}100% { background-position: 0% 50%;  }
+} </style>
+</head>
+<div class="gradient-background">  " </div>
+
+<body>
+
+<section class="container my-2 bg-dark w-80 text-light p-2 text-center" >
+<div class="container" >
+  <h2 style="color:lime" > Add repair note</h2>
+  </div>
+</section>
+
+<div class="row card-container">
+
+<form action="/addnote" method="post" th:object="${repairNote}"  class="row g-3 p-3">
+<div class="container">
+
+
+
+    <div class="card col-md-6 mx-auto mb-2" style="margin-right:3px;border:1px solid gold">
+      <div class="card-body">
+        <div class="row">
+
+          <div class="col-md-5" style="margin-bottom:15px">
+            <label for="manufacturer" class="form-label ">Manufacturer:</label>
+            <select id="manufacturer"
+           th:field="*{manufacturer}"  class="form-select b custom-dropdown" th:name="manufacturer" >
+             <option th:each="x: ${vendor}" th:value="${x.vendorName}" th:text="${x.vendorName}"></option>
+            </select>
+            </div>
+
+
+          <div class="col-md-5" style="margin-bottom:15px">
+            <label for="productName" class="form-label ">Product Name:</label>
+            <select id="productName"
+                    th:field="*{productName}"  class="form-select b custom-dropdown" th:name="productName" >
+              <option th:each="x : ${product}" th:value="${x.productName}" th:text="${x.productName}"></option>
+            </select>
+          </div>
+
+
+
+
+          <div class="col-md-5" style="margin-right:px">
+            <label for="productCode">Product Code:</label>
+            <input type="text" th:field="*{productCode}" id="productCode" >
+          </div>
+          <div class="col-md-6" style="margin-right:25px">
+            <label for="title">Title:</label>
+            <input type="text" th:field="*{title}"  id="title" required >
+          </div>
+          <div class="col-md-5">
+            <label for="dateCreated">Date:</label>
+            <input type="text"  th:field="*{dateCreated}" id="dateCreated" placeholder="autofilled" readonly  >
+          </div>
+
+          <div class="col-md-12" style="margin-right:25px">
+            <label for="link">link:</label>
+            <input type="text" th:field="*{link}" id="link"  >
+          </div>
+
+          <div class="col-md-12">
+            <label for="textNote">Repair Note:</label>
+            <textarea style="background-color:lightgrey;"
+                      class="form-control b"
+                      th:text="*{textNote}" id="textNote" th:name="textNote" rows="3" required></textarea>
+          </div>
+
+          <div class="col-md-5" style="margin-right:px">
+          <div class="col-md-6">
+            <button type="submit" class="btn btn-warning btn-block" style="margin-top: 10px;margin-bottom: 10px">Save note</button>
+          </div>
+          <div class="col-md-6">
+            <a th:href="@{/index}" class="btn btn-primary btn-block btn-sm" style="margin-top: 10px;margin-bottom:0px;">Home</a>
+          </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+</form>
+</div>
+</body>
+</html>

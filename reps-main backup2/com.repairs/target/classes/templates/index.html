@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>repair notes</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+  <style>
+        body { background-color: black; }
+        .card-container { margin-top: 20px; }
+        .card { background-color: #303030; color: white; border: none; } /* Removed border styling */
+        .card-title { color: #17a2b8; }
+        .card-content { color: white; }
+
+        h5, h6, h4 {border: 2px solid lime; margin: 5px 0;}
+        input {
+            border: 1px solid lightblue;
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+            background-color: transparent;
+            color: lime;
+        }
+    </style>
+  <style> div.gradient-background {
+  background: linear-gradient(300deg, lime, blue,lime);
+  background-size: 180% 180%;
+  animation: gradient-animation 7s ease-in-out infinite;}
+ @keyframes gradient-animation {0% { background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}100% { background-position: 0% 50%;  }
+} </style>
+</head>
+<body>
+
+<div class="gradient-background">  " </div>
+<div style="text-align:center">
+  <section class="container my-2 bg-dark w-80 text-light p-2">
+    <div class="container">
+      <h3 style="color:gold">Repair Database:</h3>
+    </div>
+  </section>
+  <div style="margin-top:10px">
+    <a th:href="@{/results}" class="btn btn-primary btn-sm" style="margin-left: 15px;margin-bottom:0px">All documentation</a>
+    <a th:href="@{/addnote}" class="btn btn-primary btn-sm" style="margin-left: 15px;margin-bottom:0px">Add note</a>
+  </div>
+</div>
+
+<div >
+  <br>
+</div>
+
+<section class="container my-2 w-100 bg-dark text-light p-2" style="border:1px solid lime">
+<h4 style="color:red;border:none">Manufacturer</h4>
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-2 mb-2" th:each="x : ${vendors}" style="margin-top: 15px;">
+        <div style="border: none">
+          <input type="text" th:value="${x.vendorName}" id="vendorName" readonly>
+
+          <a th:href="@{'/results/' + ${x.vendorName}}"
+             class="btn btn-primary btn-sm"
+             style="margin-left: 05px; margin-top: 5px; padding: 2px;
+             height:30px;background-color:transparent;border:none  ">
+             select
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+  <form action="/addmanufacturer" method="post" th:object="${vendor}"
+        class="row g-2 p-2 d-flex flex-column align-items-center"
+        style="box-shadow: 0px 0px 30px rgba(31, 81, 255, 0.6);margin-top:10px"   >
+    <div class="col-md-8 d-flex flex-column align-items-center">
+      <input type="text" class="form-control" th:name="vendorName"
+             th:value="*{vendorName}"  id="vendorName1" style="padding:2px" required >
+      <button type="submit" class="btn btn-warning btn-sm"
+              style="margin-top: 10px;">Add manufacturer </button>
+    </div>
+  </form>
+    </div>
+  </div>
+</section>
+
+
+<div>
+  <br>
+</div>
+
+<section class="container my-2 bg-dark w-100 text-light p-2" style="border:1px solid lime">
+  <h4 style="color:red;border:none">Device</h4>
+  <div class="container">
+    <div class="row">
+       <div class="col-md-2 mb-2" th:each="x : ${products}" style="margin-top: 15px;">
+        <div style="border:none">
+          <input type="text" th:value="${x.productName}" id="productName" readonly>
+          <a th:href="@{'/results1/' + ${x.productName}}"
+             class="btn btn-primary btn-sm"
+             style="margin-left: 05px; margin-top: 5px; padding: 2px;
+              height:30px;background-color:transparent;border:none  ">
+            select
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div><div class="col-md-3 mb-2">
+  <form action="/addproduct" method="post" th:object="${product}"  class="row g-2 p-2 d-flex flex-column align-items-center"
+        style="box-shadow: 0 0 30px rgba(31, 81, 255, 0.6);margin-top:10px;margin-left:10px"   >
+    <div class="col-md-8 d-flex flex-column align-items-center">
+      <input type="text" class="form-control" th:name="productName"
+             th:value="*{productName}"  id="productName1" style="padding:2px" required >
+      <button type="submit" class="btn btn-warning btn-sm"
+              style="margin-top: 10px;">Add product </button>
+    </div>
+  </form>
+
+ </div>
+ </section>
+
+</body>
+</html>

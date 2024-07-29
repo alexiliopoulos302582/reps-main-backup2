@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>repair notes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <style>
+        body { background-color: black; }
+        .card-container { margin-top: 20px; }
+        .card { background-color: #303030; color: white; border: none; } /* Removed border styling */
+        .card-title { color: #17a2b8; }
+        .card-content { color: white; }
+        .hidden {
+    display: none;
+}
+
+        h5, h6, h4 {border: 2px solid lime; margin: 5px 0;}
+        input {
+            border: 1px solid lightblue;
+            width: 100%;
+            padding: 2px;
+            box-sizing: border-box;
+            background-color: transparent;
+            color: lime;
+        }
+          .auto-resizable {
+            resize: none;
+        }
+    </style>
+    <style> div.gradient-background {
+  background: linear-gradient(300deg, lime, blue,lime);
+  background-size: 180% 180%;
+  animation: gradient-animation 7s ease-in-out infinite;}
+ @keyframes gradient-animation {0% { background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}100% { background-position: 0% 50%;  }
+} </style>
+
+</head>
+<div class="gradient-background">  " </div>
+
+<body>
+
+<div style="text-align:center">
+    <section class="container my-2 bg-dark w-80 text-light p-2">
+        <div class="container">
+            <h2 style="color:gold">Product Documentation</h2>
+        </div>
+    </section>
+</div>
+
+
+
+<section class="container my-2 bg-dark w-50 text-light p-2" >
+<form action="/results" method="get" class="row g-3 " style="border:0px solid black;margin-top:px" >
+    <div class="col-md-3">
+        <label for="searchmanufacturer" class="form-label">Manufacturer</label>
+        <div class="input-group">
+            <input type="text"
+                   class="form-control b" id="searchmanufacturer"
+                   name="searchmanufacturer" style="height: 25px;"  >
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <label for="searchproduct" class="form-label">Product</label>
+        <div class="input-group">
+            <input type="text" class="form-control b"
+                   id="searchproduct" name="searchproduct"  style="height: 25px;"  >
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <label for="searchtitle" class="form-label">Title</label>
+        <div class="input-group">
+            <input type="text" class="form-control b"
+                   id="searchtitle" name="searchtitle"  style="height: 25px;"  >
+        </div>
+    </div>
+<div>
+
+    <button type="submit" class="btn btn-primary btn-sm"
+            id="upperformsearch" style="width: 100px;">Search</button>
+     <a th:href="@{/index}" class="btn btn-warning btn-sm" style="margin-left: 15px;margin-bottom:0px">home</a>
+    <a th:href="@{/addnote}" class="btn btn-warning btn-sm" style="margin-left: 15px;margin-bottom:0px">Add note</a>
+</div>
+</form>
+    </section>
+
+
+
+
+<div class="container" >
+    <div class="col-md-12 mb-1" th:each="x : ${(searchcombined != null ? searchcombined : (repairNotes != null ? repairNotes : (searchmanufacturer != null ? searchmanufacturer : (searchproduct != null ? searchproduct : searchtitle))))}">
+
+
+     <form action="/updaterepair" method="post" th:object="${repairNote}" class="row g-1 p-1"
+           style="box-shadow: 0 0 50px rgba(31, 81, 255, 0.5);color:lime">
+
+    <div class="card" style="margin-right:3px; margin-bottom:8px;border:1px solid gold">
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-md-2 mb-2" style="margin-right:5px;color:gold">
+                    <label for="manufacturer">Manufacturer:</label>
+                    <input type="text" th:value="${x.manufacturer}" id="manufacturer" th:name="manufacturer" style="border: none;color:gold" required readonly>
+                </div>
+
+                <div class="col-md-2 mb-2" style="margin-right:5px">
+                    <label for="productName">Product Name:</label>
+                    <input type="text" th:value="${x.productName}" id="productName" th:name="productName" style="border: none;" required readonly>
+                </div>
+
+                <div class="col-md-2 mb-2" style="margin-right:px">
+                    <label for="productCode">Product Code:</label>
+                    <input type="text" th:value="${x.productCode}" id="productCode" th:name="productCode" style="border: none;" required readonly>
+                </div>
+
+                <div class="col-md-2 mb-2">
+                    <label for="dateCreated">Date:</label>
+                    <input type="text" th:value="${x.dateCreated}" id="dateCreated" th:name="dateCreated" style="border: none;" required readonly>
+                </div>
+
+                <div class="col-md-2 mb-2" style="margin-right:5px">
+                    <label for="title">Title:</label>
+                    <input type="text" th:value="${x.title}" id="title" th:name="title" style="border: none;" required readonly>
+
+                </div>
+
+                <div class="col-md-1 mb-2 " style="margin-left:40px">
+                    <label for="id">ID:</label>
+                    <input type="text" th:value="${x.id}" name="id" id="id"   style="width:50px;border: none" readonly>
+
+                </div>
+
+                <div class="col-md-12 mb-2" style="margin-right:5px">
+                    <label for="link" style="margin-left:10px">link:</label>
+                    <input type="text" th:value="${x.link}" th:name="link" id="link"  >
+                </div>
+
+                <div class="col-md-12 mb-2">
+                    <label for="textNote">Repair Note:</label>
+                    <textarea style="background-color:lightgrey;"
+                              class="form-control b"
+                               th:text="${x.textNote}" id="textNote" th:name="textNote" rows="3" readonly></textarea>
+
+</div>
+<div class="col-md-12 mb-2"   id="secondTextareaContainer${x.id}">
+<label for="textNote">append ++ </label>
+<textarea style="background-color:lightgrey;margin-top:5px"
+class="form-control b " id="'textNote1'+${x.id}" th:name="additionalNote" rows="1" ></textarea>
+</div>
+
+<div class="col-md-12">
+<button type="submit" class="btn btn-primary btn-sm" style="margin-top: 5px;margin-right: 25px">Update note</button>
+<input type="file" id="fileInput" name="file" style="display:none  ;"/>
+<button type="button"                        class="btn btn-primary btn-sm" style="margin-top: 5px;"
+onclick="document.getElementById('fileInput').click(); " >
+Open File Explorer
+</button>
+</div>
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</body>
+</html>
+
+
